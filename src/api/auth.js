@@ -20,3 +20,6 @@ export const loginUser = async (userData) => {
     throw error.response?.data || { error: "Login failed" };
   }
 };
+export const login = async (credentials) => {
+  return await axios.post(`${BASE_URL}/api/auth/login`, credentials);
+};
