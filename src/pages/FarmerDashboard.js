@@ -1,4 +1,3 @@
-// Updated FarmerDashboard.js with quantity support
 import React, { useEffect, useState } from "react";
 import {
   addProduct,
@@ -21,7 +20,7 @@ function FarmerDashboard({ user }) {
       const data = await getFarmerProducts(user?.id);
       setProducts(data);
     } catch (err) {
-      console.error("\u274C Failed to load products:", err);
+      console.error("❌ Failed to load products:", err);
     }
   };
 
@@ -41,27 +40,27 @@ function FarmerDashboard({ user }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData(); // ✅ moved above
     if (!form.name || !form.price || !form.quantity || !form.image) {
-      setMessage("\u274C All fields are required.");
-      formData.append("quantity", form.quantity);
-
+      setMessage("❌ All fields are required.");
       return;
     }
-    const formData = new FormData();
+
     formData.append("name", form.name);
     formData.append("price", form.price);
     formData.append("quantity", form.quantity);
     formData.append("image", form.image);
     formData.append("farmer_id", user?.id);
+
     try {
       await addProduct(formData);
-      setMessage("\u2705 Product added!");
+      setMessage("✅ Product added!");
       setForm({ name: "", price: "", quantity: "", image: null });
       document.getElementById("fileInput").value = null;
       fetchProducts();
     } catch (err) {
-      console.error("\uD83D\uDEAB Error:", err);
-      setMessage("\u274C " + err.message);
+      console.error("🚫 Error:", err);
+      setMessage("❌ " + err.message);
     }
   };
 
@@ -70,7 +69,7 @@ function FarmerDashboard({ user }) {
       await deleteProduct(id);
       fetchProducts();
     } catch (err) {
-      console.error("\u274C Failed to delete:", err);
+      console.error("❌ Failed to delete:", err);
     }
   };
 
@@ -88,7 +87,7 @@ function FarmerDashboard({ user }) {
       setNewQuantity("");
       fetchProducts();
     } catch (err) {
-      console.error("\u274C Failed to update:", err);
+      console.error("❌ Failed to update:", err);
     }
   };
 
