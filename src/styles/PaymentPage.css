@@ -1,0 +1,102 @@
+.pay-btn {
+  margin-top: 25px;
+  background: #00c853;
+  color: white;
+  font-weight: 600;
+  font-size: 17px;
+  padding: 14px 22px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+  width: 100%;
+}
+
+.pay-btn:hover {
+  background-color: #009624;
+  transform: translateY(-1px);
+}
+
+.payment-container {
+  max-width: 700px;
+  margin: 40px auto;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px 40px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.payment-container h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 26px;
+  color: #333;
+}
+
+.amount-section {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.amount-section p {
+  font-size: 18px;
+  color: #444;
+  margin: 5px 0;
+}
+
+.shipping-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shipping-form label {
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.shipping-form input,
+.shipping-form textarea {
+  padding: 12px 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  background-color: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.shipping-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.pay-button {
+  margin-top: 24px;
+  padding: 14px;
+  background-color: #4CAF50;
+  color: #fff;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pay-button:hover {
+  background-color: #45a049;
+}
+
+@media (max-width: 600px) {
+  .payment-container {
+    padding: 20px;
+  }
+
+  .pay-button {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
