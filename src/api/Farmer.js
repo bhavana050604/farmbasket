@@ -1,5 +1,7 @@
 // 📦 FRONTEND: src/api/Farmer.js
 import axios from "axios";
+const API_URL = "https://efarming.onrender.com";
+
 
 // ✅ Add new product
 export const addProduct = async (formData) => {

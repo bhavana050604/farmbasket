@@ -1,4 +1,6 @@
 import axios from "axios";
+const API_URL = "https://efarming.onrender.com";
+
 
 export const getAllProducts = async () => {
   const res = await axios.get("/api/buyer/products");
