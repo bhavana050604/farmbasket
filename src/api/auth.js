@@ -1,12 +1,12 @@
 import axios from "axios";
 
-// Correct constant name
-const BASE_URL = "https://efarming.onrender.com";
+// Backend base URL
+const API_URL = "https://efarming.onrender.com";
 
 // ✅ Register
 export const registerUser = async (userData) => {
   try {
-    const response = await axios.post(`${BASE_URL}/register`, userData);
+    const response = await axios.post(`${API_URL}/register`, userData);
     return response.data;
   } catch (error) {
     throw error.response?.data || { error: "Registration failed" };
@@ -16,14 +16,14 @@ export const registerUser = async (userData) => {
 // ✅ Login
 export const loginUser = async (userData) => {
   try {
-    const response = await axios.post(`${BASE_URL}/login`, userData);
+    const response = await axios.post(`${API_URL}/login`, userData);
     return response.data;
   } catch (error) {
     throw error.response?.data || { error: "Login failed" };
   }
 };
 
-// ✅ Consistent usage
+// ✅ Used for custom login logic (if needed)
 export const login = async (credentials) => {
-  return await axios.post(`${BASE_URL}/api/auth/login`, credentials);
+  return await axios.post(`${API_URL}/api/auth/login`, credentials);
 };
