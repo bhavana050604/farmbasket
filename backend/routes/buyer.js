@@ -5,7 +5,7 @@ const util = require("util");
 
 const query = util.promisify(db.query).bind(db);
 
-// ✅ Get All Products
+// ✅ Get all products
 router.get("/products", async (req, res) => {
   try {
     const products = await query(`
@@ -19,11 +19,11 @@ router.get("/products", async (req, res) => {
   }
 });
 
-// ✅ Checkout - Save order + delivery in one table
+// ✅ Checkout
 router.post("/checkout", async (req, res) => {
   const { buyer_id, cart, address, mobile, pincode, city, state } = req.body;
 
-  if (!buyer_id || !Array.isArray(cart)) {
+  if (!buyer_id || !Array.isArray(cart) || cart.length === 0) {
     return res.status(400).json({ error: "Invalid input" });
   }
 
@@ -32,7 +32,7 @@ router.post("/checkout", async (req, res) => {
       const [product] = await query("SELECT price, quantity FROM products WHERE id = ?", [item.product_id]);
 
       if (!product || product.quantity < item.quantity) {
-        return res.status(400).json({ error: `Not enough quantity for product ID ${item.product_id}` });
+        return res.status(400).json({ error: `Insufficient stock for product ID ${item.product_id}` });
       }
 
       const total = product.price * item.quantity;
@@ -57,27 +57,20 @@ router.post("/checkout", async (req, res) => {
       );
     }
 
-    res.json({ message: "Order and delivery saved" });
+    res.json({ message: "Order placed successfully." });
   } catch (err) {
+    console.error("❌ Checkout failed:", err);
     res.status(500).json({ error: "Checkout failed" });
   }
 });
 
-// ✅ Get Orders by Buyer
-// ✅ Get Orders by Buyer
+// ✅ Get orders for buyer
 router.get("/orders/:buyerId", async (req, res) => {
   try {
     const { buyerId } = req.params;
+    if (!buyerId || isNaN(buyerId)) return res.status(400).json({ error: "Invalid buyer ID" });
 
-    // Safeguard buyerId
-    if (!buyerId || isNaN(buyerId)) {
-      return res.status(400).json({ error: "Invalid buyer ID" });
-    }
-
-    const orders = await query(
-      "SELECT * FROM orders WHERE buyer_id = ? ORDER BY created_at DESC",
-      [buyerId]
-    );
+    const orders = await query("SELECT * FROM orders WHERE buyer_id = ? ORDER BY created_at DESC", [buyerId]);
     res.json(orders);
   } catch (err) {
     console.error("❌ Order fetch failed:", err);
@@ -85,8 +78,7 @@ router.get("/orders/:buyerId", async (req, res) => {
   }
 });
 
-
-// ✅ Delete Order
+// ✅ Delete an order
 router.delete("/orders/:id", async (req, res) => {
   try {
     await query("DELETE FROM orders WHERE id = ?", [req.params.id]);

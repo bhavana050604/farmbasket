@@ -21,7 +21,7 @@ function App() {
       {user && <Navbar user={user} />}
       <Routes>
         <Route path="/" element={<Login setUser={setUser} />} />
-        
+
         {user?.role === "admin" && (
           <Route path="/admin/dashboard" element={<AdminDashboard user={user} />} />
         )}
@@ -29,19 +29,16 @@ function App() {
           <Route path="/farmer/dashboard" element={<FarmerDashboard user={user} />} />
         )}
         {user?.role === "buyer" && (
-          <Route path="/buyer/dashboard" element={<BuyerDashboard user={user} />} />
+          <>
+            <Route path="/buyer/dashboard" element={<BuyerDashboard user={user} />} />
+            <Route path="/payment" element={<PaymentPage />} />
+          </>
         )}
-        {user?.role === "buyer" && (
-  <Route path="/payment" element={<PaymentPage user={user} />} />
-)}
-        
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );
-
-  
 }
 
 export default App;

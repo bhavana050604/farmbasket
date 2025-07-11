@@ -5,7 +5,8 @@ import "../styles/PaymentPage.css";
 
 function PaymentPage() {
   const { state } = useLocation();
-  const { cart, user } = state || {};
+  const cart = state?.cart || [];
+  const user = state?.user || JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -31,30 +32,26 @@ function PaymentPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate delivery fields
     if (!form.address || !form.mobile || !form.pincode || !form.city || !form.state) {
       setMessage("⚠️ Please fill all delivery fields.");
       return;
     }
 
-    // Load Razorpay SDK
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.onerror = () => {
-      setMessage("❌ Razorpay SDK failed to load.");
-    };
+    script.onerror = () => setMessage("❌ Razorpay SDK failed to load.");
     script.onload = async () => {
       try {
-        const res = await fetch("/api/payment/order", {
+        const res = await fetch("http://localhost:5000/api/payment/order", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount: totalPrice * 100 }), // amount in paise
+          body: JSON.stringify({ amount: totalPrice * 100 }),
         });
 
         const data = await res.json();
 
         const options = {
-          key: "rzp_test_SQFxBYUAD5nGdv", // ✅ Your Razorpay Test Key
+          key: "rzp_test_SQFxBYUAD5nGdv",
           amount: data.amount,
           currency: "INR",
           name: "EFarming App",
@@ -62,7 +59,6 @@ function PaymentPage() {
           order_id: data.id,
           handler: async function (response) {
             try {
-              // ✅ Call backend to save order + delivery
               const deliveryInfo = {
                 address: form.address,
                 mobile: form.mobile,
@@ -74,7 +70,7 @@ function PaymentPage() {
               await checkoutCart(user.id, cart, deliveryInfo);
 
               setMessage("✅ Payment Successful. Order Placed!");
-              setTimeout(() => navigate("/buyer"), 2000);
+              setTimeout(() => navigate("/buyer/dashboard", { replace: true }), 2000); // ✅ Fixed redirection
             } catch (err) {
               console.error("❌ Backend error:", err);
               setMessage("❌ Failed to place order.");
@@ -96,6 +92,7 @@ function PaymentPage() {
         setMessage("❌ Payment initiation failed.");
       }
     };
+
     document.body.appendChild(script);
   };
 

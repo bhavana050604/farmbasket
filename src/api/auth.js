@@ -1,29 +1,20 @@
 import axios from "axios";
 
-// Backend base URL
-const API_URL = "https://efarming.onrender.com";
+const API_URL = "http://localhost:5000";
 
 // ✅ Register
 export const registerUser = async (userData) => {
-  try {
-    const response = await axios.post(`${API_URL}/register`, userData);
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || { error: "Registration failed" };
-  }
+  const response = await axios.post(`${API_URL}/api/auth/register`, userData);
+  return response.data;
 };
 
 // ✅ Login
 export const loginUser = async (userData) => {
-  try {
-    const response = await axios.post(`${API_URL}/login`, userData);
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || { error: "Login failed" };
-  }
+  const response = await axios.post(`${API_URL}/api/auth/login`, userData);
+  return response.data;
 };
 
-// ✅ Used for custom login logic (if needed)
+// ✅ Optional alias
 export const login = async (credentials) => {
   return await axios.post(`${API_URL}/api/auth/login`, credentials);
 };

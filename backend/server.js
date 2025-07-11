@@ -1,32 +1,31 @@
+// server.js
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-
 dotenv.config();
 
 const authRoutes = require("./routes/auth");
 const adminRoutes = require("./routes/admin");
 const farmerRoutes = require("./routes/farmer");
 const buyerRoutes = require("./routes/buyer");
-const paymentRoutes = require("./routes/payment");
+const paymentRoutes = require("./routes/payment"); // ✅ This is the key
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// ✅ Mounting all routers
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/farmer", farmerRoutes);
 app.use("/api/buyer", buyerRoutes);
-app.use("/api/payment", paymentRoutes);
+app.use("/api/payment", paymentRoutes); // ✅ This must be before the 404
 
-// Root route
 app.get("/", (req, res) => {
   res.send("EFarming backend is live ✅");
 });
 
-// Optional: 404 handler
+// ❌ This catches all remaining routes — keep it LAST
 app.use((req, res) => {
   res.status(404).json({ error: "API endpoint not found" });
 });

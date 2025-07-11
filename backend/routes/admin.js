@@ -1,68 +1,72 @@
-// ✅ BACKEND: routes/admin.js
 const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
+const util = require("util");
 
-// Get all farmers
+const query = util.promisify(db.query).bind(db);
+
+// ✅ GET all farmers
 router.get("/farmers", async (req, res) => {
   try {
-    const [rows] = await db.promise().query("SELECT name, address, mobile, dob FROM farmers");
-    res.json(rows);
+    const farmers = await query("SELECT name, address, mobile, dob FROM farmers");
+    res.json(farmers);
   } catch (err) {
-    console.error(err);
+    console.error("Error fetching farmers:", err);
     res.status(500).json({ error: "Failed to fetch farmers" });
   }
 });
 
-// Get all buyers
+// ✅ GET all buyers
 router.get("/buyers", async (req, res) => {
   try {
-    const [rows] = await db.promise().query("SELECT name, address, mobile, dob FROM buyers");
-    res.json(rows);
+    const buyers = await query("SELECT name, address, mobile, dob FROM buyers");
+    res.json(buyers);
   } catch (err) {
-    console.error(err);
+    console.error("Error fetching buyers:", err);
     res.status(500).json({ error: "Failed to fetch buyers" });
   }
 });
 
-// Get all products with farmer names and convert image buffer to base64
+// ✅ GET all products with farmer name
 router.get("/products", async (req, res) => {
   try {
-    const [rows] = await db.promise().query(`
-      SELECT 
-        products.id, 
-        products.name, 
-        products.image, 
-        products.price, 
-        products.quantity, 
-        farmers.name AS farmer_name 
-      FROM products 
-      JOIN farmers ON products.farmer_id = farmers.id
+    const products = await query(`
+      SELECT p.id, p.name, p.price, p.quantity, p.image, f.name AS farmer_name
+      FROM products p
+      JOIN farmers f ON p.farmer_id = f.id
     `);
-
-    // Convert image buffer to base64
-    const productsWithBase64 = rows.map((row) => ({
-      ...row,
-      image: row.image ? Buffer.from(row.image).toString("base64") : null,
+    const base64Products = products.map(p => ({
+      ...p,
+      image: p.image ? Buffer.from(p.image).toString("base64") : null,
     }));
-
-    res.json(productsWithBase64);
+    res.json(base64Products);
   } catch (err) {
     console.error("Error fetching products:", err);
     res.status(500).json({ error: "Failed to fetch products" });
   }
 });
 
-
-// Get all delivery records
+// ✅ GET delivery/order details from orders table
 router.get("/delivery", async (req, res) => {
   try {
-    const [rows] = await db.promise().query("SELECT * FROM delivery");
-    res.json(rows);
+    const deliveries = await query(`
+      SELECT 
+        b.name,
+        o.address,
+        o.mobile,
+        o.pincode,
+        o.city,
+        o.state,
+        o.created_at
+      FROM orders o
+      JOIN buyers b ON o.buyer_id = b.id
+    `);
+    res.json(deliveries);
   } catch (err) {
-    console.error("❌ Error fetching delivery:", err);
-    res.status(500).json({ error: "Failed to fetch delivery" });
+    console.error("❌ Error fetching deliveries:", err);
+    res.status(500).json({ error: "Failed to fetch delivery details" });
   }
 });
+
 
 module.exports = router;

@@ -1,6 +1,6 @@
-// 📦 FRONTEND: src/api/Farmer.js
 import axios from "axios";
-const API_URL = "https://efarming.onrender.com";
+
+const API_URL = "http://localhost:5000";
 
 // ✅ Add new product
 export const addProduct = async (formData) => {
@@ -20,7 +20,7 @@ export const deleteProduct = async (productId) => {
   return res.data;
 };
 
-// ✅ Update price and quantity
+// ✅ Update product
 export const updateProduct = async (productId, price, quantity) => {
   const res = await axios.put(`${API_URL}/api/farmer/updateProduct/${productId}`, {
     price,
