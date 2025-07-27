@@ -68,3 +68,23 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Deployment Instructions
+
+### 1. Deploy Backend
+- Deploy the `backend/` folder to a Node.js host (Render, Railway, Heroku, etc.).
+- Note the deployed backend URL (e.g., `https://your-backend.onrender.com`).
+
+### 2. Deploy Frontend to Vercel
+- Deploy the React app (everything outside `backend/`) to Vercel.
+- Before deploying, create a `.env` file in the root of your React project with:
+  ```env
+  REACT_APP_API_URL=https://your-backend.onrender.com
+  ```
+- This ensures all API calls from the frontend use the deployed backend.
+
+### 3. Local Development
+- The code defaults to `http://localhost:5000` if `REACT_APP_API_URL` is not set, so local development works as before.
+
+### 4. Update API URLs
+- All API calls in the frontend now use the environment variable, so no further code changes are needed when switching between local and production environments.

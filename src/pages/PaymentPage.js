@@ -42,7 +42,7 @@ function PaymentPage() {
     script.onerror = () => setMessage("❌ Razorpay SDK failed to load.");
     script.onload = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/payment/order", {
+        const res = await fetch(`${process.env.REACT_APP_API_URL || "http://localhost:5000"}/api/payment/order`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ amount: totalPrice * 100 }),
