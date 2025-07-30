@@ -34,7 +34,7 @@ function Login({ setUser }) {
 
       if (res.user.role === "farmer") navigate("/farmer/dashboard");
       else if (res.user.role === "buyer") navigate("/buyer/dashboard");
-if (res.user.role === "admin") navigate("/admin/dashboard");
+      else if (res.user.role === "admin") navigate("/admin/dashboard");
     } catch (err) {
       alert(err?.error || "Login failed");
     }
@@ -53,19 +53,16 @@ if (res.user.role === "admin") navigate("/admin/dashboard");
 
   return (
     <>
-      {/* 🔝 Navbar */}
       <nav className="login-navbar">
-        <div className="navbar-left">EFarming Portal</div>
+        <div className="navbar-left">Farm Basket 🌾🧺</div>
         <div className="navbar-right">
           <a href="#about">About Us</a>
-          <a href="#contact">Contact</a>
         </div>
       </nav>
 
-      {/* 🔲 Login/Register Section */}
       <div className="login-main-wrapper">
         <div className={`container ${isActive ? "active" : ""}`}>
-          {/* 🔐 Sign In */}
+          {/* Sign In Form */}
           <div className="form-container sign-in">
             <form onSubmit={handleLogin}>
               <h1>Sign In</h1>
@@ -73,52 +70,67 @@ if (res.user.role === "admin") navigate("/admin/dashboard");
                 type="text"
                 placeholder="Name"
                 value={loginData.name}
-                onChange={(e) => setLoginData({ ...loginData, name: e.target.value })}
+                onChange={(e) =>
+                  setLoginData({ ...loginData, name: e.target.value })
+                }
                 required
               />
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={loginData.password}
-                onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                onChange={(e) =>
+                  setLoginData({ ...loginData, password: e.target.value })
+                }
                 required
               />
               <select
                 value={loginData.role}
-                onChange={(e) => setLoginData({ ...loginData, role: e.target.value })}
+                onChange={(e) =>
+                  setLoginData({ ...loginData, role: e.target.value })
+                }
               >
                 <option value="farmer">Farmer</option>
                 <option value="buyer">Buyer</option>
                 <option value="admin">Admin</option>
               </select>
-              <button type="button" onClick={() => setShowPassword(!showPassword)}>
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
                 {showPassword ? "Hide" : "Show"} Password
               </button>
               <button type="submit">Login</button>
             </form>
           </div>
 
-          {/* ✏️ Sign Up */}
+          {/* Sign Up Form */}
           <div className="form-container sign-up">
             <form onSubmit={handleRegister}>
-              
+              <h3>Sign Up</h3>
               <input
                 type="text"
                 placeholder="Name"
                 value={signupData.name}
-                onChange={(e) => setSignupData({ ...signupData, name: e.target.value })}
+                onChange={(e) =>
+                  setSignupData({ ...signupData, name: e.target.value })
+                }
                 required
               />
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={signupData.password}
-                onChange={(e) => setSignupData({ ...signupData, password: e.target.value })}
+                onChange={(e) =>
+                  setSignupData({ ...signupData, password: e.target.value })
+                }
                 required
               />
               <select
                 value={signupData.role}
-                onChange={(e) => setSignupData({ ...signupData, role: e.target.value })}
+                onChange={(e) =>
+                  setSignupData({ ...signupData, role: e.target.value })
+                }
               >
                 <option value="farmer">Farmer</option>
                 <option value="buyer">Buyer</option>
@@ -127,37 +139,47 @@ if (res.user.role === "admin") navigate("/admin/dashboard");
                 type="text"
                 placeholder="Address"
                 value={signupData.address}
-                onChange={(e) => setSignupData({ ...signupData, address: e.target.value })}
+                onChange={(e) =>
+                  setSignupData({ ...signupData, address: e.target.value })
+                }
                 required
               />
               <input
                 type="text"
                 placeholder="Mobile Number"
                 value={signupData.mobile}
-                onChange={(e) => setSignupData({ ...signupData, mobile: e.target.value })}
+                onChange={(e) =>
+                  setSignupData({ ...signupData, mobile: e.target.value })
+                }
                 required
               />
+              <label className="dob-label">Date of Birth</label>
               <input
                 type="date"
                 value={signupData.dob}
-                onChange={(e) => setSignupData({ ...signupData, dob: e.target.value })}
+                onChange={(e) =>
+                  setSignupData({ ...signupData, dob: e.target.value })
+                }
                 required
               />
-              <button type="button" onClick={() => setShowPassword(!showPassword)}>
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
                 {showPassword ? "Hide" : "Show"} Password
               </button>
               <button type="submit">Sign Up</button>
             </form>
           </div>
 
-          {/* ↔️ Toggle Panels */}
+          {/* Toggle Panels */}
           <div className="toggle-container">
             <div className="toggle">
               <div className="toggle-panel toggle-left">
                 <h1>Sign up here</h1>
                 <p>To keep connected, login with your info</p>
                 <button className="hidden" onClick={() => setIsActive(false)}>
-                  Login in Here
+                  Login Here
                 </button>
               </div>
               <div className="toggle-panel toggle-right">
@@ -172,38 +194,27 @@ if (res.user.role === "admin") navigate("/admin/dashboard");
         </div>
       </div>
 
-      {/* ℹ️ About Section */}
+      {/* About Us Section */}
       <div id="about" className="info-section">
         <h2>About Us</h2>
         <p>
-          EFarming is a digital agriculture marketplace platform designed to empower farmers and buyers alike.
-          It helps farmers sell their produce online directly to buyers with full transparency, traceability,
-          and zero middlemen.
+          FarmBasket is a digital agriculture marketplace platform designed to
+          empower farmers and buyers. It helps farmers sell their produce online
+          directly to buyers with full transparency, traceability, and zero
+          middlemen.
         </p>
-        <p><strong>Why EFarming?</strong></p>
+        <p><strong>Why FarmBasket?</strong></p>
         <ul>
           <li>🚜 Direct farm-to-consumer selling</li>
           <li>📈 Real-time product pricing & bidding</li>
-          <li>🌐 Geo-tagged buyer-farmer discovery</li>
-          <li>📊 Market insights and analytics</li>
           <li>🔒 Secure transactions with verified users</li>
         </ul>
-        <p>
-          Our mission is to revolutionize agriculture by creating an accessible, technology-driven,
-          and fair ecosystem that improves farmers’ income and simplifies procurement for buyers.
-        </p>
-      </div>
-
-      {/* ☎️ Contact Section */}
-      <div id="contact" className="info-section">
-        <h2>Contact</h2>
-        <p>📞 <strong>Phone:</strong> +91-1234567890</p>
-        <p>📧 <strong>Email:</strong> support@efarming.com</p>
-        <p>📍 <strong>Address:</strong> 123, FarmTech Street, Telangana, India</p>
-        <p>⏰ <strong>Working Hours:</strong> Mon–Sat, 9:00 AM – 6:00 PM</p>
-        <p>🔗 <strong>Follow Us:</strong></p>
+        <h2>Contact Us</h2>
         <ul>
-        
+          <li><strong>Name:</strong> Karthikeya Pisupati</li>
+          <li><strong>Email:</strong> <a href="mailto:pisupatikarthikeyabharadwaja@gmail.com">pisupatikarthikeyabharadwaja@gmail.com</a></li>
+          <li><strong>Phone:</strong> +91 7075686837</li>
+          <li><strong>Location:</strong> Guntur</li>
         </ul>
       </div>
     </>
