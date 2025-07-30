@@ -51,7 +51,7 @@ function PaymentPage() {
         const data = await res.json();
 
         const options = {
-          key: "rzp_test_SQFxBYUAD5nGdv",
+          key: "rzp_live_u4nn0qx73rY59W",
           amount: data.amount,
           currency: "INR",
           name: "EFarming App",
