@@ -18,14 +18,12 @@ function BuyerDashboard({ user }) {
       try {
         const productsData = await getAllProducts();
         const ordersData = await getOrderHistory(user?.id);
-
         setProducts(productsData);
         setOrders(ordersData);
       } catch (err) {
         console.error("❌ Error loading data:", err);
       }
     };
-
     if (user?.id) fetchData();
   }, [user?.id]);
 
@@ -67,7 +65,6 @@ function BuyerDashboard({ user }) {
   const handleDeleteOrder = async (orderId) => {
     const confirmDelete = window.confirm("⚠️ Are you sure you want to delete this order?");
     if (!confirmDelete) return;
-
     try {
       await deleteOrder(orderId);
       setOrders(orders.filter((order) => order.id !== orderId));
@@ -107,71 +104,68 @@ function BuyerDashboard({ user }) {
       </div>
 
       {/* Order History & Cart Section */}
-          {/* Bottom layout */}
-<div className="bottom-section">
-  {/* Order History */}
-  <div className="orders-section">
-    <h3>Order History</h3>
-    {orders.length === 0 ? (
-      <p>No orders yet</p>
-    ) : (
-      <ul>
-        {orders.map((order) => (
-          <li key={order.id}>
-            {order.product_name} - {order.quantity}kg - ₹{order.total_price} on{" "}
-            {order.created_at
-              ? new Date(order.created_at).toLocaleDateString()
-              : "Unknown Date"}
-            <button
-              className="delete-order"
-              onClick={() => handleDeleteOrder(order.id)}
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
-    )}
-  </div>
+      <div className="bottom-section">
+        {/* Order History */}
+        <div className="orders-section">
+          <h3>Order History</h3>
+          {orders.length === 0 ? (
+            <div className="empty-state">No orders yet</div>
+          ) : (
+            <ul>
+              {orders.map((order) => (
+                <li key={order.id}>
+                  <span>
+                    {order.product_name} - {order.quantity}kg - ₹{order.total_price} on {order.created_at ? new Date(order.created_at).toLocaleDateString() : "Unknown Date"}
+                  </span>
+                  <button
+                    className="delete-order"
+                    onClick={() => handleDeleteOrder(order.id)}
+                  >
+                    Delete
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
-  {/* Cart Section */}
-  <div className="cart-section">
-    <h3>Your Cart</h3>
-    {cart.length === 0 ? (
-      <p>No items yet</p>
-    ) : (
-      <div>
-        {cart.map((item) => (
-          <div key={item.product_id} className="cart-item">
-            <span>{item.name}</span>
-            <input
-              type="number"
-              value={item.quantity}
-              onChange={(e) =>
-                updateCartQty(item.product_id, parseInt(e.target.value))
-              }
-              min="1"
-            />
-            <span>₹{item.price * item.quantity}</span>
-            <button
-              className="remove-btn"
-              onClick={() =>
-                setCart(cart.filter((i) => i.product_id !== item.product_id))
-              }
-            >
-              ❌
-            </button>
-          </div>
-        ))}
-        <h4>Total: ₹{totalCartPrice}</h4>
-        <button className="checkout-btn" onClick={handleCheckout}>
-          Place Order
-        </button>
+        {/* Cart Section */}
+        <div className="cart-section">
+          <h3>Your Cart</h3>
+          {cart.length === 0 ? (
+            <div className="empty-state">No items yet</div>
+          ) : (
+            <div>
+              {cart.map((item) => (
+                <div key={item.product_id} className="cart-item">
+                  <span>{item.name}</span>
+                  <input
+                    type="number"
+                    value={item.quantity}
+                    onChange={(e) =>
+                      updateCartQty(item.product_id, parseInt(e.target.value))
+                    }
+                    min="1"
+                  />
+                  <span>₹{item.price * item.quantity}</span>
+                  <button
+                    className="remove-btn"
+                    onClick={() =>
+                      setCart(cart.filter((i) => i.product_id !== item.product_id))
+                    }
+                  >
+                    ❌
+                  </button>
+                </div>
+              ))}
+              <h4>Total: ₹{totalCartPrice}</h4>
+              <button className="checkout-btn" onClick={handleCheckout}>
+                Place Order
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    )}
-  </div>
-</div>
-
     </div>
   );
 }

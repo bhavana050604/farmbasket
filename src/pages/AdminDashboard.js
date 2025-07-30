@@ -20,7 +20,6 @@ function AdminDashboard() {
           axios.get(`${API_URL}/api/admin/products`),
           axios.get(`${API_URL}/api/admin/delivery`),
         ]);
-
         setFarmers(farmersRes.data);
         setBuyers(buyersRes.data);
         setProducts(productsRes.data);
@@ -30,7 +29,6 @@ function AdminDashboard() {
         setError("Failed to load admin dashboard data.");
       }
     };
-
     fetchAdminData();
   }, []);
 
@@ -73,33 +71,32 @@ function AdminDashboard() {
         </table>
       </section>
 
-{/* Products */}
-<section>
-  <h3>All Products</h3>
-  <table>
-    <thead>
-      <tr><th>Image</th><th>Name</th><th>Farmer Name</th><th>Price</th><th>Quantity</th></tr>
-    </thead>
-    <tbody>
-      {products.map((p, i) => (
-        <tr key={i}>
-          <td>
-            {p.image ? (
-              <img src={`data:image/jpeg;base64,${p.image}`} alt={p.name} width="60" />
-            ) : (
-              "No Image"
-            )}
-          </td>
-          <td>{p.name}</td>
-          <td>{p.farmer_name}</td>
-          <td>₹{p.price}</td>
-          <td>{p.quantity}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</section>
-
+      {/* Products */}
+      <section>
+        <h3>All Products</h3>
+        <table>
+          <thead>
+            <tr><th>Image</th><th>Name</th><th>Farmer Name</th><th>Price</th><th>Quantity</th></tr>
+          </thead>
+          <tbody>
+            {products.map((p, i) => (
+              <tr key={i}>
+                <td>
+                  {p.image ? (
+                    <img src={`data:image/jpeg;base64,${p.image}`} alt={p.name} width="60" />
+                  ) : (
+                    "No Image"
+                  )}
+                </td>
+                <td>{p.name}</td>
+                <td>{p.farmer_name}</td>
+                <td>₹{p.price}</td>
+                <td>{p.quantity}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
 
       {/* Deliveries */}
       <section>

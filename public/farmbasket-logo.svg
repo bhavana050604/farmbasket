@@ -1,0 +1,73 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="basketGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#EC4899"/>
+    </linearGradient>
+    <linearGradient id="produceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#EF4444"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Basket -->
+  <path d="M40 60 L60 40 H140 L160 60 V140 L140 160 H60 L40 140 V60 Z" 
+        fill="url(#basketGradient)" 
+        stroke="url(#basketGradient)" 
+        stroke-width="3"/>
+  
+  <!-- Basket Handle -->
+  <path d="M70 40 Q100 20 130 40" 
+        fill="none" 
+        stroke="url(#basketGradient)" 
+        stroke-width="4" 
+        stroke-linecap="round"/>
+  
+  <!-- Basket Weaving Pattern -->
+  <path d="M50 70 H150 M50 85 H150 M50 100 H150 M50 115 H150 M50 130 H150" 
+        stroke="rgba(255,255,255,0.3)" 
+        stroke-width="1"/>
+  
+  <!-- Carrots -->
+  <ellipse cx="70" cy="80" rx="8" ry="12" fill="#F59E0B" transform="rotate(-15 70 80)"/>
+  <ellipse cx="75" cy="75" rx="6" ry="10" fill="#F59E0B" transform="rotate(-10 75 75)"/>
+  <ellipse cx="80" cy="70" rx="7" ry="11" fill="#F59E0B" transform="rotate(-20 80 70)"/>
+  
+  <!-- Bell Peppers -->
+  <ellipse cx="110" cy="85" rx="10" ry="8" fill="#EF4444"/>
+  <ellipse cx="120" cy="90" rx="8" ry="6" fill="#EF4444"/>
+  <ellipse cx="130" cy="85" rx="9" ry="7" fill="#EF4444"/>
+  
+  <!-- Tomatoes/Apples -->
+  <circle cx="90" cy="110" r="8" fill="#EF4444"/>
+  <circle cx="105" cy="105" r="7" fill="#EF4444"/>
+  <circle cx="120" cy="110" r="8" fill="#EF4444"/>
+  
+  <!-- Leafy Greens -->
+  <path d="M60 120 Q65 115 70 120 Q75 125 80 120 Q85 115 90 120" 
+        fill="none" 
+        stroke="#10B981" 
+        stroke-width="2" 
+        stroke-linecap="round"/>
+  <path d="M100 120 Q105 115 110 120 Q115 125 120 120 Q125 115 130 120" 
+        fill="none" 
+        stroke="#10B981" 
+        stroke-width="2" 
+        stroke-linecap="round"/>
+  
+  <!-- Onions/Gourds -->
+  <ellipse cx="75" cy="135" rx="6" ry="8" fill="#F3F4F6"/>
+  <ellipse cx="85" cy="140" rx="5" ry="7" fill="#F3F4F6"/>
+  <ellipse cx="95" cy="135" rx="6" ry="8" fill="#F3F4F6"/>
+  
+  <!-- Overflowing Produce -->
+  <circle cx="140" cy="70" r="6" fill="#F59E0B"/>
+  <ellipse cx="150" cy="75" rx="4" ry="6" fill="#EF4444" transform="rotate(15 150 75)"/>
+  <circle cx="145" cy="85" r="5" fill="#10B981"/>
+  
+  <!-- Small Details -->
+  <circle cx="70" cy="80" r="2" fill="rgba(255,255,255,0.8)"/>
+  <circle cx="110" cy="85" r="2" fill="rgba(255,255,255,0.8)"/>
+  <circle cx="90" cy="110" r="2" fill="rgba(255,255,255,0.8)"/>
+</svg> 

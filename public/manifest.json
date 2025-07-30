@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "FarmBasket",
+  "name": "FarmBasket - Empowering Farmers, Feeding Homes",
+  "description": "FarmBasket connects local farmers directly with buyers. Empowering Farmers, Feeding Homes.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#2e7d32",
+  "background_color": "#f6f9f6"
 }

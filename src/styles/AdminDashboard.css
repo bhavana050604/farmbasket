@@ -1,100 +1,124 @@
-.admin-dashboard {
-  padding: 2rem;
-  font-family: Arial, sans-serif;
-  background-color: #f5f9ff;
+/* FarmBasket Admin Dashboard - Minimal Farm Glassmorphism */
+
+:root {
+  --farm-green: #6DBF4B;
+  --farm-light-green: #A3D977;
+  --farm-earth: #F5F5DC;
+  --farm-earth-dark: #E9E5D6;
+  --farm-white: #fff;
+  --farm-shadow: 0 8px 32px 0 rgba(34, 49, 63, 0.12);
+  --farm-border: rgba(109, 191, 75, 0.15);
+}
+
+body {
+  font-family: 'Inter', 'Nunito', Arial, sans-serif;
+  background: linear-gradient(120deg, var(--farm-light-green) 0%, var(--farm-earth) 100%);
   min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.admin-dashboard {
+  min-height: 100vh;
+  background: none;
+  padding: 2rem;
+  position: relative;
 }
 
 .admin-dashboard h2 {
   text-align: center;
-  color: #0a3d62;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--farm-green);
   margin-bottom: 2rem;
+  letter-spacing: 1px;
 }
 
 section {
-  margin-bottom: 3rem;
-  background-color: #ffffff;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2.5rem;
+  background: rgba(255,255,255,0.85);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: var(--farm-shadow);
+  border: 1px solid var(--farm-border);
+  position: relative;
+  z-index: 10;
 }
 
 section h3 {
-  color: #1e3799;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid #82ccdd;
-  padding-bottom: 0.5rem;
+  color: var(--farm-green);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  text-align: center;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(109,191,75,0.08);
 }
 
 th, td {
   text-align: left;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #dcdde1;
-  font-size: 15px;
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--farm-border);
+  font-size: 1rem;
 }
 
 th {
-  background-color: #f1f2f6;
-  color: #2f3542;
+  background: var(--farm-green);
+  color: white;
+  font-weight: 700;
 }
 
 tr:hover {
-  background-color: #f0f8ff;
-}
-
-.error {
-  color: red;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-.admin-dashboard {
-  padding: 20px;
-  background: #f0f8ff;
-  font-family: Arial, sans-serif;
-}
-
-h2 {
-  font-size: 28px;
-  margin-bottom: 20px;
-}
-
-section {
-  margin-bottom: 40px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-th, td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background-color: #1976d2;
-  color: white;
+  background: rgba(109,191,75,0.07);
 }
 
 img {
   width: 60px;
   height: 60px;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: 8px;
+  border: 1px solid var(--farm-border);
 }
 
 .error {
-  color: red;
-  font-weight: bold;
-  margin-bottom: 20px;
+  color: #dc2626;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  background: rgba(239, 68, 68, 0.08);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+@media (max-width: 1024px) {
+  section {
+    padding: 1.2rem;
+  }
+  th, td {
+    padding: 0.7rem 0.5rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 1rem;
+  }
+  section {
+    padding: 0.7rem;
+  }
+  th, td {
+    padding: 0.5rem 0.3rem;
+    font-size: 0.9rem;
+  }
+  .admin-dashboard h2 {
+    font-size: 1.5rem;
+  }
 }

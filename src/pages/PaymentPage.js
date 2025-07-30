@@ -31,12 +31,10 @@ function PaymentPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!form.address || !form.mobile || !form.pincode || !form.city || !form.state) {
       setMessage("⚠️ Please fill all delivery fields.");
       return;
     }
-
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.onerror = () => setMessage("❌ Razorpay SDK failed to load.");
@@ -47,21 +45,16 @@ function PaymentPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ amount: totalPrice * 100 }),
         });
-
         const data = await res.json();
-
         const options = {
           key: "rzp_live_u4nn0qx73rY59W",
           amount: data.amount,
           currency: "INR",
-          name: "EFarming App",
-          description: "EFarming Order",
+          name: "FarmBasket App",
+          description: "FarmBasket Order",
           order_id: data.id,
           handler: async function (response) {
             try {
-              console.log("🔍 Payment response:", response);
-              
-              // Verify payment and create order
               const verifyRes = await fetch(`${(process.env.REACT_APP_API_URL || "http://localhost:5000").replace(/\/$/, '')}/api/payment/verify`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -71,7 +64,7 @@ function PaymentPage() {
                   razorpay_signature: response.razorpay_signature,
                   orderData: {
                     buyer_id: user.id,
-                    product_id: cart[0].product_id, // Assuming single product for now
+                    product_id: cart[0].product_id,
                     quantity: cart[0].quantity,
                     total_amount: totalPrice,
                     address: form.address,
@@ -82,9 +75,7 @@ function PaymentPage() {
                   }
                 }),
               });
-
               const verifyData = await verifyRes.json();
-              
               if (verifyData.success) {
                 setMessage("✅ Payment Successful. Order Placed!");
                 setTimeout(() => navigate("/buyer/dashboard", { replace: true }), 2000);
@@ -92,7 +83,6 @@ function PaymentPage() {
                 throw new Error(verifyData.error || "Payment verification failed");
               }
             } catch (err) {
-              console.error("❌ Payment verification error:", err);
               setMessage("❌ Failed to place order.");
             }
           },
@@ -104,22 +94,18 @@ function PaymentPage() {
             color: "#00aa88",
           },
         };
-
         const rzp = new window.Razorpay(options);
         rzp.open();
       } catch (err) {
-        console.error("❌ Razorpay Init Error:", err);
         setMessage("❌ Payment initiation failed.");
       }
     };
-
     document.body.appendChild(script);
   };
 
   return (
     <div className="payment-page">
       <h2>Confirm Your Order</h2>
-
       <div className="summary">
         <h3>Order Summary</h3>
         <ul>
@@ -131,10 +117,8 @@ function PaymentPage() {
         </ul>
         <h4>Total: ₹{totalPrice}</h4>
       </div>
-
       <form className="delivery-form" onSubmit={handleSubmit}>
         <h3>Delivery Details</h3>
-
         <input
           type="text"
           name="address"
@@ -170,11 +154,9 @@ function PaymentPage() {
           value={form.state}
           onChange={handleChange}
         />
-
         <button type="submit">Confirm & Pay</button>
       </form>
-
-      {message && <p className="status-message">{message}</p>}
+      {message && <p className={`status-message ${message.includes("✅") ? "success" : "error"}`}>{message}</p>}
     </div>
   );
 }
