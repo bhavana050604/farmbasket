@@ -51,6 +51,25 @@ app.get("/api/test-db", (req, res) => {
   });
 });
 
+// Initialize database endpoint
+app.get("/api/init-db", async (req, res) => {
+  try {
+    const initDb = require("./scripts/init-db");
+    await initDb();
+    res.json({ 
+      status: "success", 
+      message: "Database initialized successfully ✅",
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      status: "error", 
+      message: "Database initialization failed", 
+      error: error.message 
+    });
+  }
+});
+
 // ❌ This catches all remaining routes — keep it LAST
 app.use((req, res) => {
   res.status(404).json({ error: "API endpoint not found" });
