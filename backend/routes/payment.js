@@ -7,8 +7,8 @@ const db = require("../config/db");
 console.log("✅ payment.js route loaded"); // Must appear in terminal
 
 const razorpay = new Razorpay({
-  key_id: "rzp_test_SQFxBYUAD5nGdv",
-  key_secret: "Dr8INiqJCRzaavOqjm1dr5o2",
+  key_id: "rzp_live_u4nn0qx73rY59W",
+  key_secret: "bRsPg5D8RGgtTIlMURlJluoG",
 });
 
 // 🔄 Ping test
