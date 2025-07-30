@@ -59,20 +59,40 @@ function PaymentPage() {
           order_id: data.id,
           handler: async function (response) {
             try {
-              const deliveryInfo = {
-                address: form.address,
-                mobile: form.mobile,
-                pincode: form.pincode,
-                city: form.city,
-                state: form.state,
-              };
+              console.log("🔍 Payment response:", response);
+              
+              // Verify payment and create order
+              const verifyRes = await fetch(`${(process.env.REACT_APP_API_URL || "http://localhost:5000").replace(/\/$/, '')}/api/payment/verify`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                  orderData: {
+                    buyer_id: user.id,
+                    product_id: cart[0].product_id, // Assuming single product for now
+                    quantity: cart[0].quantity,
+                    total_amount: totalPrice,
+                    address: form.address,
+                    mobile: form.mobile,
+                    pincode: form.pincode,
+                    city: form.city,
+                    state: form.state
+                  }
+                }),
+              });
 
-              await checkoutCart(user.id, cart, deliveryInfo);
-
-              setMessage("✅ Payment Successful. Order Placed!");
-              setTimeout(() => navigate("/buyer/dashboard", { replace: true }), 2000); // ✅ Fixed redirection
+              const verifyData = await verifyRes.json();
+              
+              if (verifyData.success) {
+                setMessage("✅ Payment Successful. Order Placed!");
+                setTimeout(() => navigate("/buyer/dashboard", { replace: true }), 2000);
+              } else {
+                throw new Error(verifyData.error || "Payment verification failed");
+              }
             } catch (err) {
-              console.error("❌ Backend error:", err);
+              console.error("❌ Payment verification error:", err);
               setMessage("❌ Failed to place order.");
             }
           },
