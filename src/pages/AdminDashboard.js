@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/AdminDashboard.css";
 
+const API_URL = (process.env.REACT_APP_API_URL || "http://localhost:5000").replace(/\/$/, '');
+
 function AdminDashboard() {
   const [farmers, setFarmers] = useState([]);
   const [buyers, setBuyers] = useState([]);
@@ -13,10 +15,10 @@ function AdminDashboard() {
     const fetchAdminData = async () => {
       try {
         const [farmersRes, buyersRes, productsRes, deliveriesRes] = await Promise.all([
-          axios.get("/api/admin/farmers"),
-          axios.get("/api/admin/buyers"),
-          axios.get("/api/admin/products"),
-          axios.get("/api/admin/delivery"),
+          axios.get(`${API_URL}/api/admin/farmers`),
+          axios.get(`${API_URL}/api/admin/buyers`),
+          axios.get(`${API_URL}/api/admin/products`),
+          axios.get(`${API_URL}/api/admin/delivery`),
         ]);
 
         setFarmers(farmersRes.data);
