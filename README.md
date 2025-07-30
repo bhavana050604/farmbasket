@@ -1,90 +1,90 @@
-# Getting Started with Create React App
+# 🥕 FarmBasket - Bridging Farmers and Consumers 🌾
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Live App:** [efarming-1.onrender.com](https://efarming-1.onrender.com)
 
-## Available Scripts
+FarmBasket is a full-stack web application that connects **farmers directly to buyers**, eliminating middlemen. Built with modern tech for a seamless and transparent food supply experience.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🚀 Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 👨‍🌾 Farmer Login, View & Add Products  
+- 🛒 Buyer Login, Purchase & Order Tracking  
+- 🛡 Admin Panel for system-wide monitoring  
+- 💳 Razorpay Integration for Secure Payments  
+- 🗄 Online & Offline Database Support (MySQL via Railway & Localhost)
+- ☁ Hosted frontend + backend using Render
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🔐 Authentication Pages
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 🏠 Sign In / Sign Up
+![Sign In](screenshots/home1.png)
+![Sign Up](screenshots/home2.png)
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## ℹ️ About Us
+![About](screenshots/about.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 👨‍🌾 Farmer Portal
 
-### `npm run eject`
+### 📋 View Product Listings
+![Farmer View](screenshots/farmer1.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### ➕ Add New Product
+![Add Product](screenshots/farmer2.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🧑‍🤝‍🧑 Buyer Portal
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 🛒 Buyer Dashboard
+![Buyer Dashboard](screenshots/buyer1.png)
 
-## Learn More
+### 💰 Payment & Delivery Tracking
+![Payment & Delivery](screenshots/buyer2.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 💳 Payment Integration
+![Razorpay](screenshots/razor.png)
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🔐 Admin Panel
 
-### Analyzing the Bundle Size
+### 👁 View All Activity (Farmers, Buyers, Products, Orders)
+![Admin 1](screenshots/admin1.png)
+![Admin 2](screenshots/admin2.png)
+![Admin 3](screenshots/admin3.png)
+![Admin 4](screenshots/admin4.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 🗃 Database & Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 🧪 Local SQL Connection
+![Local DB](screenshots/sql.png)
 
-### Advanced Configuration
+### ☁ Deployment via Render (Backend + Frontend)
+![Render](screenshots/render.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 🧵 Cloud SQL using Railway
+![Railway](screenshots/railway.png)
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 🛠️ Tech Stack
 
-### `npm run build` fails to minify
+- **Frontend:** React.js, HTML, CSS, JS
+- **Backend:** Node.js
+- **Database:** MySQL (Railway & Localhost)
+- **Payments:** Razorpay
+- **Hosting:** Render
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
-## Deployment Instructions
-
-### 1. Deploy Backend
-- Deploy the `backend/` folder to a Node.js host (Render, Railway, Heroku, etc.).
-- Note the deployed backend URL (e.g., `https://your-backend.onrender.com`).
-
-### 2. Deploy Frontend to Vercel
-- Deploy the React app (everything outside `backend/`) to Vercel.
-- Before deploying, create a `.env` file in the root of your React project with:
-  ```env
-  REACT_APP_API_URL=https://your-backend.onrender.com
-  ```
-- This ensures all API calls from the frontend use the deployed backend.
-
-### 3. Local Development
-- The code defaults to `http://localhost:5000` if `REACT_APP_API_URL` is not set, so local development works as before.
-
-### 4. Update API URLs
-- All API calls in the frontend now use the environment variable, so no further code changes are needed when switching between local and production environments.
+> © 2025 FarmBasket — Cultivating Connections Between Farmers and Buyers
