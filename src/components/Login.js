@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 import { registerUser, loginUser } from "../api/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login({ setUser }) {
   const [isActive, setIsActive] = useState(false);
@@ -23,11 +25,39 @@ function Login({ setUser }) {
     dob: "",
   });
 
+  // --- Validation function for signup ---
+  const validateSignup = () => {
+    const password = signupData.password;
+    // Password: min 6 chars, 1 uppercase, 1 special char, 1 number
+    if (!password || password.length < 6) {
+      toast.error("Password must be at least 6 characters.");
+      return false;
+    }
+    if (!/[A-Z]/.test(password)) {
+      toast.error("Password must contain at least one uppercase letter.");
+      return false;
+    }
+    if (!/[0-9]/.test(password)) {
+      toast.error("Password must contain at least one number.");
+      return false;
+    }
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      toast.error("Password must contain at least one special character.");
+      return false;
+    }
+    // Mobile: required, 10 digits
+    if (!signupData.mobile || !/^\d{10}$/.test(signupData.mobile)) {
+      toast.error("Mobile number must be exactly 10 digits.");
+      return false;
+    }
+    return true;
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const res = await loginUser(loginData);
-      alert("Login successful!");
+      toast.success("Login successful!");
       localStorage.setItem("token", res.token);
       localStorage.setItem("user", JSON.stringify(res.user));
       setUser(res.user);
@@ -36,23 +66,34 @@ function Login({ setUser }) {
       else if (res.user.role === "buyer") navigate("/buyer/dashboard");
       else if (res.user.role === "admin") navigate("/admin/dashboard");
     } catch (err) {
-      alert(err?.error || "Login failed");
+      toast.error(err?.error || "Login failed");
     }
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    if (!validateSignup()) {
+      return;
+    }
     try {
       await registerUser(signupData);
-      alert("Registration successful! Please login.");
+      toast.success("Registration successful! Please login.");
       setIsActive(false);
     } catch (err) {
-      alert(err?.error || "Registration failed");
+      // Show the backend error if available
+      if (err?.response?.data?.error) {
+        toast.error(err.response.data.error);
+      } else if (err?.error) {
+        toast.error(err.error);
+      } else {
+        toast.error("Registration failed");
+      }
     }
   };
 
   return (
     <>
+      <ToastContainer />
       <nav className="login-navbar">
         <div className="navbar-left">Farm Basket 🌾🧺</div>
         <div className="navbar-right">

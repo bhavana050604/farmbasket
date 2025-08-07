@@ -6,6 +6,8 @@ import {
 } from "../api/Buyer";
 import { useNavigate } from "react-router-dom";
 import "../styles/BuyerDashboard.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function BuyerDashboard({ user }) {
   const [products, setProducts] = useState([]);
@@ -37,6 +39,7 @@ function BuyerDashboard({ user }) {
             : item
         )
       );
+      toast.info("Increased quantity in cart.");
     } else {
       setCart([
         ...cart,
@@ -47,6 +50,7 @@ function BuyerDashboard({ user }) {
           quantity: 1,
         },
       ]);
+      toast.success("Product added to cart!");
     }
   };
 
@@ -74,6 +78,11 @@ function BuyerDashboard({ user }) {
   };
 
   const handleCheckout = () => {
+    if (cart.length === 0) {
+      toast.error("Your cart is empty!");
+      return;
+    }
+    toast.info("Proceeding to payment...");
     navigate("/payment", { state: { cart, user } });
   };
 
@@ -166,6 +175,7 @@ function BuyerDashboard({ user }) {
           )}
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={2500} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
     </div>
   );
 }

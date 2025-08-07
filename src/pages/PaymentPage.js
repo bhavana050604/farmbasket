@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { checkoutCart } from "../api/Buyer";
 import "../styles/PaymentPage.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function PaymentPage() {
   const { state } = useLocation();
@@ -18,8 +19,6 @@ function PaymentPage() {
     state: "",
   });
 
-  const [message, setMessage] = useState("");
-
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -32,12 +31,12 @@ function PaymentPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.address || !form.mobile || !form.pincode || !form.city || !form.state) {
-      setMessage("⚠️ Please fill all delivery fields.");
+      toast.error("Please fill all delivery fields.");
       return;
     }
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.onerror = () => setMessage("❌ Razorpay SDK failed to load.");
+    script.onerror = () => toast.error("Razorpay SDK failed to load.");
     script.onload = async () => {
       try {
         const res = await fetch(`${(process.env.REACT_APP_API_URL || "http://localhost:5000").replace(/\/$/, '')}/api/payment/order`, {
@@ -77,13 +76,13 @@ function PaymentPage() {
               });
               const verifyData = await verifyRes.json();
               if (verifyData.success) {
-                setMessage("✅ Payment Successful. Order Placed!");
+                toast.success("Payment Successful. Order Placed!");
                 setTimeout(() => navigate("/buyer/dashboard", { replace: true }), 2000);
               } else {
                 throw new Error(verifyData.error || "Payment verification failed");
               }
             } catch (err) {
-              setMessage("❌ Failed to place order.");
+              toast.error("Failed to place order.");
             }
           },
           prefill: {
@@ -97,7 +96,7 @@ function PaymentPage() {
         const rzp = new window.Razorpay(options);
         rzp.open();
       } catch (err) {
-        setMessage("❌ Payment initiation failed.");
+        toast.error("Payment initiation failed.");
       }
     };
     document.body.appendChild(script);
@@ -156,7 +155,7 @@ function PaymentPage() {
         />
         <button type="submit">Confirm & Pay</button>
       </form>
-      {message && <p className={`status-message ${message.includes("✅") ? "success" : "error"}`}>{message}</p>}
+      <ToastContainer position="top-right" autoClose={2500} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
     </div>
   );
 }

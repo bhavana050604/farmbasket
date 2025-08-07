@@ -11,11 +11,52 @@ router.post("/register", (req, res) => {
     return res.status(400).json({ error: "Invalid role" });
   }
 
+  // Password: min 6 chars, 1 uppercase, 1 special char, 1 number
+  if (!password || password.length < 6) {
+    return res.status(400).json({ error: "Password must be at least 6 characters." });
+  }
+  if (!/[A-Z]/.test(password)) {
+    return res.status(400).json({ error: "Password must contain at least one uppercase letter." });
+  }
+  if (!/[0-9]/.test(password)) {
+    return res.status(400).json({ error: "Password must contain at least one number." });
+  }
+  if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    return res.status(400).json({ error: "Password must contain at least one special character." });
+  }
+  // Mobile: required, 10 digits
+  if (!mobile || !/^\d{10}$/.test(mobile)) {
+    return res.status(400).json({ error: "Mobile number must be exactly 10 digits." });
+  }
+  // DOB: required, valid date, at least 18 years old
+  if (!dob) {
+    return res.status(400).json({ error: "Date of birth is required." });
+  }
+  const dobDate = new Date(dob);
+  if (isNaN(dobDate.getTime())) {
+    return res.status(400).json({ error: "Invalid date of birth." });
+  }
+  const today = new Date();
+  const age = today.getFullYear() - dobDate.getFullYear();
+  const m = today.getMonth() - dobDate.getMonth();
+  if (
+    age < 18 ||
+    (age === 18 && m < 0) ||
+    (age === 18 && m === 0 && today.getDate() < dobDate.getDate())
+  ) {
+    return res.status(400).json({ error: "You must be at least 18 years old." });
+  }
+
   const table = role === "farmer" ? "farmers" : "buyers";
   const sql = `INSERT INTO ${table} (name, password, address, mobile, dob) VALUES (?, ?, ?, ?, ?)`;
 
   db.query(sql, [name, password, address, mobile, dob], (err, result) => {
-    if (err) return res.status(500).json({ error: err.message });
+    if (err) {
+      if (err.code === "ER_DUP_ENTRY") {
+        return res.status(400).json({ error: "Username already exists." });
+      }
+      return res.status(500).json({ error: err.message });
+    }
     return res.status(201).json({ message: `${role} registered successfully` });
   });
 });

@@ -6,11 +6,12 @@ import {
   updateProduct,
 } from "../api/Farmer";
 import "../styles/FarmerDashboard.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function FarmerDashboard({ user }) {
   const [form, setForm] = useState({ name: "", price: "", quantity: "", image: null });
   const [products, setProducts] = useState([]);
-  const [message, setMessage] = useState("");
   const [editId, setEditId] = useState(null);
   const [newPrice, setNewPrice] = useState("");
   const [newQuantity, setNewQuantity] = useState("");
@@ -42,7 +43,7 @@ function FarmerDashboard({ user }) {
     e.preventDefault();
     const formData = new FormData(); // ✅ moved above
     if (!form.name || !form.price || !form.quantity || !form.image) {
-      setMessage("❌ All fields are required.");
+      toast.error("All fields are required.");
       return;
     }
 
@@ -54,13 +55,12 @@ function FarmerDashboard({ user }) {
 
     try {
       await addProduct(formData);
-      setMessage("✅ Product added!");
+      toast.success("Product added!");
       setForm({ name: "", price: "", quantity: "", image: null });
       document.getElementById("fileInput").value = null;
       fetchProducts();
     } catch (err) {
-      console.error("🚫 Error:", err);
-      setMessage("❌ " + err.message);
+      toast.error("Error: " + err.message);
     }
   };
 
@@ -103,7 +103,6 @@ function FarmerDashboard({ user }) {
             <input id="fileInput" type="file" name="image" accept="image/*" onChange={handleChange} required />
             <button type="submit">Add Product</button>
           </form>
-          {message && <p className="status-message">{message}</p>}
         </div>
         <div className="info-sidebar">
           <h3>How This Works</h3>
@@ -142,6 +141,7 @@ function FarmerDashboard({ user }) {
           ))
         )}
       </div>
+      <ToastContainer position="top-right" autoClose={2500} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
     </div>
   );
 }

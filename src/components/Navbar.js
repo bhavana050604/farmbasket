@@ -13,7 +13,7 @@ const Navbar = ({ user }) => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-brand">EFarming</div>
+      <div className="navbar-brand">FarmBasket</div>
       <ul>
         <li>Welcome, {user?.name} ({user?.role})</li>
         <li><button onClick={handleLogout}>Logout</button></li>
